@@ -2,9 +2,9 @@ const scraperObject = {
   url: 'https://www.willhem.se/sok-bostad/Boras/',
   // url: 'http://books.toscrape.com',
   async scraper(browser){
-      let page = await browser.newPage();
-      console.log(`Navigating to ${this.url}...`);
-      await page.goto(this.url, { waitUntil: 'load' });
+      let page = await browser.newPage()
+      console.log(`Navigating to ${this.url}...`)
+      await page.goto(this.url, { waitUntil: 'load' })
 
       let data = await page.$$eval('.table > tbody > tr', tables => { 
         return tables.map(tr => {
@@ -19,7 +19,7 @@ const scraperObject = {
             aptURL: 'https://www.willhem.se' + aptURL
           }
         })
-      });
+      })
 
       const formattedData = await data.map(apartment => {
         const sRent = apartment.rent.match(/(\d+)/)[0]
@@ -44,4 +44,4 @@ const scraperObject = {
   }
 }
 
-module.exports = scraperObject;
+module.exports = scraperObject

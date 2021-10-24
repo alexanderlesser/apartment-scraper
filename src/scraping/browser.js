@@ -7,15 +7,15 @@ const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker')
 puppeteer.use(AdblockerPlugin())
 
 async function startBrowser() {
-  let browser;
+  let browser
   try {
-    console.log('opening browser');
+    console.log('opening browser')
     browser = await puppeteer.launch({
       headless: true,
       args: ['--disable-setuid-sandbox'], 'ignoreHTTPSErrors' : true
     })
   } catch (err) {
-    console.log('Could not create browser instance:', err);
+    console.log('Could not create browser instance:', err)
   }
 
   return browser
@@ -23,4 +23,4 @@ async function startBrowser() {
 
 module.exports = {
   startBrowser
-};
+}

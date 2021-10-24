@@ -1,9 +1,9 @@
-const slackbot = require('slackbots');
+const slackbot = require('slackbots')
 
 const bot = new slackbot({
     token: process.env.SLACKBOT_TOKEN,
     name: 'Apartment BOT'
-});
+})
 
 function getCurrentTime () {
     const options = {
