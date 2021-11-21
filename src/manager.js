@@ -89,23 +89,28 @@ const runChecks = async () => {
 const setupChecks = () => {
   try {
     // init cron job
-  cron_schedule = '*/1 * * * *'
-  const job = schedule.scheduleJob(cron_schedule, () => {
-    if (isRunning) {
-      console.log("Körs redan")
+    if(process.env.NODE_ENV === 'prod') {
+      console.log('init cron job')
+      cron_schedule = '*/1 * * * *'
+      const job = schedule.scheduleJob(cron_schedule, () => {
+        if (isRunning) {
+          console.log("Körs redan")
+        } else {
+          isRunning = true
+          timesRunned = job
+          runChecks()
+        }
+      })
     } else {
-      isRunning = true
-      timesRunned = job
       runChecks()
     }
-  })
 } catch (err) {
   console.log(err)
 }
 }
 
   const compareApartments =  async (newApartments) => {
-    // Compare new apartments agains checks and notify on slack if true
+    // Compare new apartments against checks and notify on slack if true
     try {
       await newApartments.forEach(apt => {
         if(apt.rent < 7000 && apt.kvm > 29) {
@@ -124,6 +129,8 @@ const setupChecks = () => {
 
 module.exports.init = async () => {
   try {
+    console.log('Starting...')
+    console.log('Running in ' + process.env.NODE_ENV + ' environment')
   setupChecks()
 } catch (err) {
   console.log(err)
